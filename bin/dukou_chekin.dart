@@ -42,8 +42,8 @@ void main(List<String> arguments) async {
     var checkinResult = await checkin(token);
     var message = checkinResult.result;
     if (checkinResult.ret == 1) {
-      TransformResult transformResult = await trafficTransform(1024, token);
-      message += '\n${transformResult.msg}';
+      // TransformResult transformResult = await trafficTransform(1024, token);
+      message += '\n暂不兑换流量';
     }
     if (serverKey != null && serverKey.isNotEmpty) {
       await sendCheckinMessage(serverKey, message);
@@ -73,14 +73,14 @@ Future<CheckinResult> checkin(String token) async {
   return CheckinResult.fromJson(json.decode(response.data));
 }
 
-Future<TransformResult> trafficTransform(int num, String token) async {
-  var response = await Dio(BaseOptions(headers: {'access-token': token})).get(
-    'https://dukou.dev/api/user/koukanntraffic',
-    queryParameters: {'traffic': num},
-  );
-  print(response.data);
-  return TransformResult.fromJson(json.decode(response.data));
-}
+// Future<TransformResult> trafficTransform(int num, String token) async {
+//   var response = await Dio(BaseOptions(headers: {'access-token': token})).get(
+//     'https://dukou.dev/api/user/koukanntraffic',
+//     queryParameters: {'traffic': num},
+//   );
+//   print(response.data);
+//   return TransformResult.fromJson(json.decode(response.data));
+// }
 
 Future<void> sendCheckinMessage(String serverKey, String msg) async {
   await Dio().get(
